@@ -1,7 +1,7 @@
 const DataBase = require('./DB');
 
 class categoryProductModel {
-    async createCategory(name, desc, callback){
+    createCategory(name, desc, callback){
         if (!name)
             return callback({
                 success: false,
@@ -12,7 +12,7 @@ class categoryProductModel {
                 success: false,
                 msg: 'Desc is required',
             });
-        await DataBase.query("INSERT INTO category VALUES (NULL, ?, ?)", [name, desc], result => {
+        DataBase.query("INSERT INTO category VALUES (NULL, ?, ?)", [name, desc], result => {
             const { success, msg } = result;
 
             if (!success) return callback(msg);
@@ -21,8 +21,8 @@ class categoryProductModel {
         });
     }
 
-    async getAllCategories(callback) {
-        await DataBase.query('SELECT * FROM category', results => {
+    getAllCategories(callback) {
+        DataBase.query('SELECT * FROM category', results => {
             callback(results);
         });
     }

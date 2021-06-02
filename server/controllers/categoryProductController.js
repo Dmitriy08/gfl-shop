@@ -1,15 +1,15 @@
 const {categoryProductModel} = require('../models');
 
 class categoryProductController {
-    createCategory(req, res) {
+    async createCategory(req, res) {
         const {name, desc} = req.body;
-        categoryProductModel.createCategory(name, desc, result => {
+        await categoryProductModel.createCategory(name, desc, result => {
            return res.json(result)
         })
     }
 
-    getAllCategories(req, res) {
-        categoryProductModel.getAllCategories(categories => {
+    async getAllCategories(req, res) {
+       await categoryProductModel.getAllCategories(categories => {
             res.json({categories});
         })
     }
