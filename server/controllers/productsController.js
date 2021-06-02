@@ -1,19 +1,22 @@
-const { productsModel } = require('../models');
+const {productsModel} = require('../models');
 
 class productsController {
-    createProduct(req, res){
+    createProduct(req, res) {
 
     }
-    getAllProducts(req, res){
-         productsModel.getAllProducts(async products => {
-            await res.json({products});
+
+    getAllProducts(req, res) {
+        productsModel.getAllProducts(products => {
+            res.json({products});
         })
     }
-    getProduct(req, res){
-        const { id } = req.params;
-        productsModel.getProduct(id, async results => {
-            await res.json({results});
+
+    getProduct(req, res) {
+        const {id} = req.params;
+        productsModel.getProduct(id, results => {
+            res.json({results});
         })
     }
 }
+
 module.exports = new productsController();

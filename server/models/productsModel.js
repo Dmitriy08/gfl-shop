@@ -5,14 +5,14 @@ class ProductsModel {
 
     }
 
-    getAllProducts(callback) {
-        DataBase.query('SELECT * FROM products', results => {
+    async getAllProducts(callback) {
+        await DataBase.query('SELECT * FROM products', results => {
             callback(results);
         });
     }
 
-    getProduct(id, callback) {
-        DataBase.query('SELECT * FROM products WHERE id_product=?', [id], results => {
+    async getProduct(id, callback) {
+        await DataBase.query('SELECT * FROM products WHERE id_product=?', [id], results => {
             callback(results);
         });
     }
