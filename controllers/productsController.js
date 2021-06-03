@@ -1,6 +1,6 @@
-const {productsModel} = require('../models');
 const uuid = require('uuid');
 const path = require('path')
+const {productsModel} = require('../models');
 const ApiError = require('../helpers/ApiError');
 
 class productsController {
@@ -16,7 +16,6 @@ class productsController {
                 productStructure
             } = req.body;
             const {img} = req.files;
-            console.log(req.files)
             let fileName = uuid.v4() + ".jpg";
 
             await img.mv(path.resolve(__dirname, '..', 'uploads', fileName));
@@ -28,7 +27,6 @@ class productsController {
                 } else {
                     return res.json(result)
                 }
-
             })
         } catch (e) {
             next(ApiError.badRequest(e.message));
@@ -42,10 +40,11 @@ class productsController {
         })
     }
 
-    getProduct(req, res) {
+    async getProduct(req, res) {
         const {id} = req.params;
-        productsModel.getProduct(id, results => {
-            res.json({results});
+        await productsModel.getProduct(id, result => {
+            const { success, msg } = result;
+            res.json(msg);
         })
     }
 }

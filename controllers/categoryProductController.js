@@ -9,8 +9,9 @@ class categoryProductController {
     }
 
     async getAllCategories(req, res) {
-       await categoryProductModel.getAllCategories(categories => {
-            res.json({categories});
+       await categoryProductModel.getAllCategories(result => {
+           const {success, msg} = result
+            res.json(msg);
         })
     }
 }

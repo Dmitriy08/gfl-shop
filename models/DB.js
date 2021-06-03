@@ -12,6 +12,13 @@ class DataBase {
             database: DATABASE,
             password: PASSWORD
         });
+        this.con.connect((error)=>{
+            if(error){
+                return console.log('Error to connect to DB');
+            }else{
+                return console.log('Connect to DB !!!');
+            }
+        })
     }
 
     query(...args) {
