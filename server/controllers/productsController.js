@@ -20,8 +20,17 @@ class productsController {
             let fileName = uuid.v4() + ".jpg";
             await img.mv(path.resolve(__dirname, '..', 'uploads', fileName));
 
+
             await productsModel.createProduct(fileName, productName, productDescription, productPrice, productAvailable, productCount, productKeywords, productStructure, result => {
-                return res.json(result)
+
+                const { success, msg } = result;
+
+                if (!success) {
+                    return res.json({erroMessage: msg,})
+                } else {
+                    return res.json(result)
+                }
+
             })
         } catch (e) {
             next(ApiError.badRequest(e.message));

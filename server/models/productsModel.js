@@ -1,7 +1,7 @@
 const DataBase = require('./DB');
 
 class ProductsModel {
-    async createProduct(
+    createProduct(
         fileName,
         name,
         productDescription,
@@ -11,8 +11,8 @@ class ProductsModel {
         productKeywords,
         productStructure,
         callback
-    ){
-        await DataBase.query("INSERT INTO products VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+    ) {
+        DataBase.query("INSERT INTO products VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
             [
                 name,
                 productDescription,
@@ -22,19 +22,23 @@ class ProductsModel {
                 productKeywords,
                 productStructure
             ], result => {
-            const { success, msg } = result;
 
-            if (!success) return callback(msg);
+                const {success, msg} = result;
+                console.log('SUCCESSSSS',success);
+                console.log('MESSAGEEEEE',msg);
+                if (success) {
+                    DataBase.promise().execute( "INSERT INTO image VALUES (NULL, ?)", [fileName], result => {
+                        const {success, msg} = result;
 
-            callback(result);
-        });
-        await DataBase.query("INSERT INTO image VALUES (NULL, ?)", [fileName], result => {
-                const { success, msg } = result;
+                        if (!success) return callback(msg);
 
-                if (!success) return callback(msg);
+                        callback(result);
+                    });
+                }
 
                 callback(result);
             });
+
     }
 
     async getAllProducts(callback) {
@@ -42,6 +46,7 @@ class ProductsModel {
             callback(results);
         });
     }
+
 
     async getProduct(id, callback) {
         await DataBase.query('SELECT * FROM products WHERE id_product=?', [id], results => {

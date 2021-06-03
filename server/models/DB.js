@@ -5,11 +5,12 @@ const {HOST, USER, DATABASE, PASSWORD} = process.env;
 class DataBase {
     constructor() {
         this.con = mysql.createPool({
+            multipleStatements: true,
             connectionLimit: 5,
             host: HOST,
             user: USER,
             database: DATABASE,
-            password: ''
+            password: PASSWORD
         });
     }
 

@@ -9,12 +9,12 @@ const {PORT} = process.env || 3010;
 
 const app = express();
 app.use(cors());
-// parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
+
 app.use(bodyParser.json())
-app.use(fileupload({}));
+app.use(fileupload({ createParentPath: true }));
 app.use('/api', router);
 app.use(errorHandler);
 
