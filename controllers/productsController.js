@@ -18,15 +18,13 @@ class productsController {
             const {img} = req.files;
             console.log(req.files)
             let fileName = uuid.v4() + ".jpg";
+
             await img.mv(path.resolve(__dirname, '..', 'uploads', fileName));
 
-
             await productsModel.createProduct(fileName, productName, productDescription, productPrice, productAvailable, productCount, productKeywords, productStructure, result => {
-
                 const { success, msg } = result;
-
                 if (!success) {
-                    return res.json({erroMessage: msg,})
+                    return res.json({errorMessage: msg})
                 } else {
                     return res.json(result)
                 }
@@ -38,8 +36,9 @@ class productsController {
     }
 
     getAllProducts(req, res) {
-        productsModel.getAllProducts(products => {
-            res.json({products});
+        productsModel.getAllProducts(result => {
+            const { success, msg } = result;
+            res.json(msg);
         })
     }
 

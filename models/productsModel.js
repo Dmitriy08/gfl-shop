@@ -26,18 +26,18 @@ class ProductsModel {
                 const {success, msg} = result;
                 console.log('SUCCESSSSS',success);
                 console.log('MESSAGEEEEE',msg);
-                if (success) {
-                    DataBase.promise().execute( "INSERT INTO image VALUES (NULL, ?)", [fileName], result => {
-                        const {success, msg} = result;
-
-                        if (!success) return callback(msg);
-
-                        callback(result);
-                    });
-                }
 
                 callback(result);
             });
+
+         DataBase.query( "INSERT INTO image VALUES (NULL, ?)", [fileName], result => {
+            const {success, msg} = result;
+
+            if (!success) return callback(msg);
+
+            callback(result);
+
+        });
 
     }
 

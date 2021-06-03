@@ -1,5 +1,5 @@
 const express = require('express');
-const router = require('./routes/index');
+const router = require('./routes');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const fileupload = require('express-fileupload')
