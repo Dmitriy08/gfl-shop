@@ -27,12 +27,9 @@ class UserController{
             }
         })
     }
-    check(req, res, next){
-        const {id} = req.query;
-        if (!id){
-            return next(ApiError.badRequest('Wrong ID'));
-        }
-        res.json(id);
+    async check(req, res, next) {
+        const token = jwt.sign({name:req.user.name, email:req.user.email}, process.env.SECRET_KEY, {expiresIn: '24h'})
+        return res.json({token})
     }
 }
 
