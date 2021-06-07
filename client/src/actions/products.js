@@ -4,20 +4,23 @@ import {
     FETCH_PRODUCTS_SUCCESS, SELECTED_CATEGORY, SELECTED_TYPE
 } from "./types";
 
-import planetsApiService from "../services/products";
+import productsApiService from "../services/products";
 
-const loadPlanetsSuccess = (planets) => ({
+const loadProductsSuccess = (products) => ({
     type: FETCH_PRODUCTS_SUCCESS,
     payload: {
-        ...planets,
+        ...products,
     },
 });
 
-const loadPlanetsStarted = () => ({
-    type: FETCH_PRODUCTS_STARTED,
-});
+const loadProductsStarted = () => {
+    console.log(1111)
+    return {
+        type: FETCH_PRODUCTS_STARTED,
+    }
+};
 
-const loadPlanetsFailure = () => ({
+const loadProductsFailure = () => ({
     type: FETCH_PRODUCTS_FAILURE,
 });
 
@@ -34,15 +37,27 @@ export const activeType = (type) => ({
     },
 })
 
-// export const loadProducts = (page = 1) => async (dispatch) => {
-//     dispatch(loadPlanetsStarted());
-//     try {
-//         const products = await planetsApiService
-//             .getPlanets(page)
-//             .then((res) => res.json());
-//
-//         dispatch(loadPlanetsSuccess(planets));
-//     } catch {
-//         dispatch(loadPlanetsFailure());
-//     }
-// };
+// export const loadProducts = () => dispatch => {
+//     dispatch(loadProductsStarted());
+//     productsApiService
+//         .getProducts()
+//         .then(response => response.json())
+//         .then(data => {
+//             dispatch(loadProductsSuccess(data));
+//         })
+//         .catch(error => {
+//             dispatch(loadProductsFailure());
+//         })
+// }
+
+export const loadProducts = (page = 1) => async (dispatch) => {
+    dispatch(loadProductsStarted());
+    try {
+        const products = await productsApiService
+            .getProducts()
+            .then((res) => res.json());
+        dispatch(loadProductsSuccess(products));
+    } catch {
+        dispatch(loadProductsFailure());
+    }
+};

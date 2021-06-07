@@ -36,7 +36,7 @@ class productsController {
     getAllProducts(req, res) {
         productsModel.getAllProducts(result => {
             const { success, msg } = result;
-            res.json(msg);
+            res.json({msg});
         })
     }
 

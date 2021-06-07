@@ -6,58 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-    products: [
-        {
-            "id_product": 1,
-            "product_name": "Футболка 1",
-            "product_description": "охрененная",
-            "product_price": 100,
-            "product_avaible": "YES",
-            "product_count": 10,
-            "product_keywords": "футболка, одежда",
-            "product_structure": 1
-        },
-        {
-            "id_product": 12,
-            "product_name": "Футболка 1",
-            "product_description": "охрененная",
-            "product_price": 100,
-            "product_avaible": "YES",
-            "product_count": 10,
-            "product_keywords": "футболка, одежда",
-            "product_structure": 1
-        },
-        {
-            "id_product": 13,
-            "product_name": "Футболка 1",
-            "product_description": "охрененная",
-            "product_price": 100,
-            "product_avaible": "YES",
-            "product_count": 10,
-            "product_keywords": "футболка, одежда",
-            "product_structure": 1
-        },
-        {
-            "id_product": 4,
-            "product_name": "Футболка 2",
-            "product_description": "Хорошая",
-            "product_price": 10,
-            "product_avaible": "NO",
-            "product_count": 50,
-            "product_keywords": "фут",
-            "product_structure": 1
-        },
-        {
-            "id_product": 5,
-            "product_name": "Футболка 3",
-            "product_description": "плохаяб китайская",
-            "product_price": 1,
-            "product_avaible": "YES",
-            "product_count": 100000,
-            "product_keywords": "не покупать",
-            "product_structure": 2
-        }
-    ],
+    products: null,
     categories: [
         {
             "id_category": 1,
@@ -116,11 +65,10 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetchingProducts: true,
-                planetsError: false,
+                productsError: false,
             };
         }
         case SELECTED_CATEGORY: {
-            console.log('action.payload', action.payload)
             return {
                 ...state,
                 selectedCategory: action.payload,
@@ -128,7 +76,6 @@ export default function reducer(state = initialState, action) {
         }
 
         case SELECTED_TYPE: {
-            console.log('action.payload', action.payload)
             return {
                 ...state,
                 selectedType: action.payload,
@@ -138,14 +85,14 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetchingProducts: false,
-                planetsError: true,
+                productsError: true,
             };
         }
         case FETCH_PRODUCTS_SUCCESS: {
             return {
                 ...state,
                 fetchingProducts: false,
-                planets: action.payload,
+                products: action.payload,
             };
         }
         default:

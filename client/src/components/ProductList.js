@@ -3,8 +3,7 @@ import {useSelector} from "react-redux";
 import {Row} from "react-bootstrap";
 import ProductItem from "./ProductItem";
 
-const ProductList = () => {
-    const {products} = useSelector(state => state.products);
+const ProductList = ({products}) => {
     return (
         <Row className="d-flex">
             {products.map(product =>

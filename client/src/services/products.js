@@ -1,8 +1,6 @@
-const apiHost = process.env.REACT_APP_SW_API_HOST;
+// const apiHost = process.env.REACT_APP_API_URL;
 
 class ProductsApiService {
-    getProducts = async page => fetch(`${apiHost}/people/?page=${page}`);
-
-    getProduct = async id => fetch(`${apiHost}/people/${id}/`);
+    getProducts = async () => await fetch(`http://localhost:3010/api/products`);
 }
 export default new ProductsApiService();
