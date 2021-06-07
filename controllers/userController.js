@@ -3,9 +3,10 @@ const ApiError = require('../helpers/ApiError');
 const jwt = require('jsonwebtoken');
 
 class UserController{
-    registration(req, res){
+    async registration(req, res){
         const {name, email, password, phone} = req.body
-        usersModel.register(name, email, password, phone, result => {
+        console.log(name, email, password, phone)
+       await usersModel.register(name, email, password, phone, result => {
             const { success, msg } = result;
             if (!success) {
                 return res.json({msg})

@@ -4,16 +4,16 @@ import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {useHistory} from 'react-router-dom'
-import {setUser} from '../actions/user'
+import {logOutUser} from '../actions/user'
 
 const NavBar = () => {
     const user = useSelector(state => state.user);
-
+        console.log(user.currentUser.name)
     const dispatch = useDispatch()
     const history = useHistory();
 
-    const Auth = () => {
-        dispatch(setUser(true))
+    const logOut = () => {
+        dispatch(logOutUser())
     }
     return (
             <Navbar bg="dark" variant="dark">
@@ -21,6 +21,7 @@ const NavBar = () => {
                     <NavLink style={{color:'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
                     {user.isAuth ?
                         <Nav className="ml-auto" style={{color: 'white'}}>
+
                             <Button
                                 onClick={() => history.push(ADMIN_ROUTE)}
                                 variant={"outline-light"}
@@ -29,7 +30,7 @@ const NavBar = () => {
                             </Button>
                             <Button
                                 variant={"outline-light"}
-                                onClick={() =>  history.push(LOGIN_ROUTE)}
+                                onClick={() =>  logOut()}
                                 className="ml-2"
                             >
                                 Log out
@@ -37,7 +38,7 @@ const NavBar = () => {
                         </Nav>
                         :
                         <Nav className="ml-auto" style={{color: 'white'}}>
-                            <Button variant={"outline-light"} onClick={Auth}>Sign in</Button>
+                            <Button variant={"outline-light"} onClick={() => history.push(LOGIN_ROUTE)}>Sign in</Button>
                         </Nav>
                     }
                 </Container>

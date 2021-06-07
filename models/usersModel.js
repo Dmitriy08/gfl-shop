@@ -58,9 +58,9 @@ class UsersModel {
                 const hashPassword = await bcrypt.hash(userPassword, 5)
                 const [status] = await Database.promise().execute('SELECT id_status FROM users_status WHERE status_name="USER" LIMIT 1');
                 const {id_status} = status[0];
-                console.log(id_status)
-                Database.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?)", [userName, userEmail, hashPassword, userPhone, id_status], result => {
-                        console.log(result)
+
+                Database.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?)", [userName, userEmail, hashPassword, userPhone, +id_status], result => {
+
                         const {success, msg} = result;
                     console.log(msg)
                         if (!success) return callback(msg);
