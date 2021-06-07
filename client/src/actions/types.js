@@ -7,4 +7,6 @@ export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
 /********** USER ACTION TYPES *************** */
 export const SET_USER_IS_AUTH = "SET_USER_IS_AUTH";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const SELECTED_CATEGORY = "SELECTED_CATEGORY";
+export const SELECTED_TYPE = "SELECTED_TYPE";
 

@@ -3,6 +3,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import CategoryBar from "../components/CategoryBar";
 import ProductList from "../components/ProductList";
+import TypeBar from "../components/TypeBar";
 
 const Shop = () => {
     const {products} = useSelector(state => state.products);
@@ -16,6 +17,7 @@ const Shop = () => {
                     <CategoryBar/>
                 </Col>
                 <Col md={9}>
+                    <TypeBar/>
                     <ProductList/>
                 </Col>
             </Row>

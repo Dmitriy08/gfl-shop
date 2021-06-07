@@ -1,10 +1,13 @@
 import React from 'react';
+import {Col, Container, Image} from "react-bootstrap";
 
 const ProductPage = () => {
     return (
-        <div>
-            ProductPage
-        </div>
+        <Container>
+            <Col>
+              <Image width={300} height={300} src={'adasdasd'}/>
+            </Col>
+        </Container>
     );
 };
 

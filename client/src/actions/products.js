@@ -1,7 +1,7 @@
 import {
     FETCH_PRODUCTS_STARTED,
     FETCH_PRODUCTS_FAILURE,
-    FETCH_PRODUCTS_SUCCESS,
+    FETCH_PRODUCTS_SUCCESS, SELECTED_CATEGORY, SELECTED_TYPE
 } from "./types";
 
 import planetsApiService from "../services/products";
@@ -20,6 +20,19 @@ const loadPlanetsStarted = () => ({
 const loadPlanetsFailure = () => ({
     type: FETCH_PRODUCTS_FAILURE,
 });
+
+export const activeCategory = (category) => ({
+    type: SELECTED_CATEGORY,
+    payload: {
+        ...category,
+    },
+})
+export const activeType = (type) => ({
+    type: SELECTED_TYPE,
+    payload: {
+        ...type,
+    },
+})
 
 // export const loadProducts = (page = 1) => async (dispatch) => {
 //     dispatch(loadPlanetsStarted());

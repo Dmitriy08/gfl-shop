@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
-import {SHOP_ROUTE} from "../utils/consts";
+import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {useHistory} from 'react-router-dom'
 import {setUser} from '../actions/user'
 
@@ -22,16 +22,17 @@ const NavBar = () => {
                     {user.isAuth ?
                         <Nav className="ml-auto" style={{color: 'white'}}>
                             <Button
+                                onClick={() => history.push(ADMIN_ROUTE)}
                                 variant={"outline-light"}
                             >
                                 Dashboard
                             </Button>
                             <Button
                                 variant={"outline-light"}
-                                // onClick={() => logOut()}
+                                onClick={() =>  history.push(LOGIN_ROUTE)}
                                 className="ml-2"
                             >
-                                Sign out
+                                Log out
                             </Button>
                         </Nav>
                         :
