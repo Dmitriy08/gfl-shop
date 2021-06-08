@@ -3,25 +3,25 @@ const ApiError = require('../helpers/ApiError');
 const jwt = require('jsonwebtoken');
 
 class UserController{
-    async registration(req, res){
+    async registration(req, res, next){
         const {name, email, password, phone} = req.body
         console.log(name, email, password, phone)
        await usersModel.register(name, email, password, phone, result => {
             const { success, msg } = result;
             if (!success) {
-                return res.json({msg})
+                    return next(ApiError.badRequest(msg))
             } else {
                 const token = jwt.sign({name, email}, process.env.SECRET_KEY, {expiresIn: '24h'})
                 return res.json({token})
             }
         })
     }
-    login(req, res){
+    login(req, res, next){
         const {email, password} = req.body;
         usersModel.login(email, password, result=>{
             const { success, msg } = result;
             if (!success) {
-                return res.json({msg})
+                return next(ApiError.badRequest(msg))
             } else {
                 const token = jwt.sign({name: msg.name, email: msg.email}, process.env.SECRET_KEY, {expiresIn: '24h'})
                 return res.json({token})

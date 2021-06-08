@@ -8,7 +8,6 @@ import {logOutUser} from '../actions/user'
 
 const NavBar = () => {
     const user = useSelector(state => state.user);
-        console.log(user.currentUser.name)
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -21,6 +20,7 @@ const NavBar = () => {
                     <NavLink style={{color:'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
                     {user.isAuth ?
                         <Nav className="ml-auto" style={{color: 'white'}}>
+                            {user.isAuth && <span className="mr-2">Hello {user.currentUser.name}</span>}
 
                             <Button
                                 onClick={() => history.push(ADMIN_ROUTE)}

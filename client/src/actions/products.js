@@ -14,7 +14,6 @@ const loadProductsSuccess = (products) => ({
 });
 
 const loadProductsStarted = () => {
-    console.log(1111)
     return {
         type: FETCH_PRODUCTS_STARTED,
     }

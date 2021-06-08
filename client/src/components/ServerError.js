@@ -1,11 +1,21 @@
 import React from 'react';
 
-const ServerError = () => {
+const ServerError = ({message}) => {
+
     return (
-        <div className='alert alert-danger' role='alert'>
-            Service Temporary Unavailable. <br />
-            Try Again Later.
-        </div>
+        <>
+            {message ?
+            <div className='alert alert-danger' role='alert'>
+                {message}
+            </div>
+                :
+                <div className='alert alert-danger' role='alert'>
+                    Service Temporary Unavailable. <br/>
+                    Try Again Later.
+                </div>
+            }
+        </>
+
     );
 };
 
