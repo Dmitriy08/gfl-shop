@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 class UserController{
     async registration(req, res, next){
         const {name, email, password, phone} = req.body
-        console.log(name, email, password, phone)
+
        await usersModel.register(name, email, password, phone, result => {
             const { success, msg } = result;
             if (!success) {

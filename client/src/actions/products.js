@@ -1,7 +1,9 @@
 import {
-    FETCH_PRODUCTS_STARTED,
     FETCH_PRODUCTS_FAILURE,
-    FETCH_PRODUCTS_SUCCESS, SELECTED_CATEGORY, SELECTED_TYPE
+    FETCH_PRODUCTS_STARTED,
+    FETCH_PRODUCTS_SUCCESS,
+    SELECTED_CATEGORY,
+    SELECTED_TYPE
 } from "./types";
 
 import productsApiService from "../services/products";
@@ -59,4 +61,14 @@ export const loadProducts = (page = 1) => async (dispatch) => {
     } catch {
         dispatch(loadProductsFailure());
     }
+};
+
+
+export const loadProduct = (id) => async () => {
+    return await productsApiService
+            .getProduct(id)
+            .then((res) => {
+                console.log(res)
+                res.json()
+            });
 };

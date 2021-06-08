@@ -40,13 +40,34 @@ class productsController {
         })
     }
 
-    async getProduct(req, res) {
+
+    getProduct(req, res, next){
         const {id} = req.params;
-        await productsModel.getProduct(id, result => {
-            const { success, msg } = result;
-            res.json(msg);
+        const {type, color, size} = req.query
+        let variants = '';
+        if (type) variants += ` and product_options.product_type=${type} `
+        if (color) variants += ` and product_options.product_color=${color} `
+        if (size) variants += ` and product_options.product_size=${size} `
+
+        if (!/^\d+$/.test(id)) {
+            return res.status(500).send('Server Error');
+        }
+        productsModel.getProduct( id, variants,product => {
+            const { success, msg } = product;
+
+            if (!success || msg.length === 0) {
+                return next(ApiError.badRequest('Product not fount'))
+            }
+
+            try {
+                res.json(msg)
+            } catch (e) {
+                res.json({message: e.message})
+            }
         })
     }
+
+
 }
 
 module.exports = new productsController();

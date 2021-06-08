@@ -26,7 +26,7 @@ const Auth = () => {
     const click = async () => {
         let data
         if (isLogin) {
-            data = await UsersApiService.login(email, password)
+            data = await UsersApiService.login(email, password) //check this
             const response = await UsersApiService.login(email, password)
             data = await response.json()
             if (!response.ok) {
