@@ -43,6 +43,7 @@ class productsController {
 
     getProduct(req, res, next){
         const {id} = req.params;
+
         const {type, color, size} = req.query
         let variants = '';
         if (type) variants += ` and product_options.product_type=${type} `
@@ -56,8 +57,9 @@ class productsController {
             const { success, msg } = product;
 
             if (!success || msg.length === 0) {
-                return next(ApiError.badRequest('Product not fount'))
+                return next(ApiError.badRequest({msg}))
             }
+
 
             try {
                 res.json(msg)

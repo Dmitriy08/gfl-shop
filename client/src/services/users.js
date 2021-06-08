@@ -1,5 +1,4 @@
 import jwt_decode from "jwt-decode";
-import React from 'react';
 const apiHost = process.env.REACT_APP_API_URL;
 
 class UsersApiService {

@@ -10,7 +10,7 @@ class DataBase {
             host: HOST,
             user: USER,
             database: DATABASE,
-            password: PASSWORD
+            password: ''
         });
     }
 

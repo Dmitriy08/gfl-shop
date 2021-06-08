@@ -17,7 +17,7 @@ const NavBar = () => {
     return (
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <NavLink style={{color:'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
+                    <NavLink style={{color:'white'}} to={SHOP_ROUTE}>BuyYourDream</NavLink>
                     {user.isAuth ?
                         <Nav className="ml-auto" style={{color: 'white'}}>
                             {user.isAuth && <span className="mr-2">Hello {user.currentUser.name}</span>}

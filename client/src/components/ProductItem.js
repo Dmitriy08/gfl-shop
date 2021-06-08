@@ -1,6 +1,6 @@
 import React from 'react';
 import {PRODUCT_ROUTE} from "../utils/consts";
-import {Button, Card, Col, Image} from "react-bootstrap";
+import {Button, Card, Col} from "react-bootstrap";
 import {useHistory} from "react-router-dom"
 
 const ProductItem = ({product}) => {

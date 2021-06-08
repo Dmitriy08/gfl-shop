@@ -4,7 +4,7 @@ import {Button, Card, Container, Form} from "react-bootstrap";
 import {NavLink, useHistory, useLocation} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import UsersApiService from "../services/users"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setUser} from "../actions/user";
 import ServerError from "../components/ServerError";
 
@@ -17,7 +17,6 @@ const Auth = () => {
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const {currentUser} = useSelector(state => state.user);
     const dispatch = useDispatch()
 
 
