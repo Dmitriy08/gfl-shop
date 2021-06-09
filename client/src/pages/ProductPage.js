@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Image, ListGroup, Row} from "react-bootstrap";
 import {useHistory, useParams} from 'react-router-dom'
 import ProductsApiService from "../services/products";
+import CartApiService from "../services/cart";
 import {useSelector} from "react-redux";
 import {CART_ROUTE, LOGIN_ROUTE} from "../utils/consts";
 
@@ -18,6 +19,7 @@ const ProductPage = () => {
     const [color, setColor] = useState(null)
     const [size, setSize] = useState(null)
 
+    const product_count = 0
     useEffect(() => {
         async function fetchData() {
             console.log('render')
@@ -55,13 +57,26 @@ const ProductPage = () => {
         setType('')
     }
 
-    const addToCart = () => {
+    const addToCart = async () => {
         if(!user.isAuth){
             history.push(LOGIN_ROUTE)
         }
-        history.push(CART_ROUTE)
+        const token = localStorage.getItem('token')
+        const product = {
+            'id_user': token,
+            'id_product': info.id_product,
+            'id_options': +options.id_options,
+            'product_count': product_count,
+            'product_sum': info.product_price
+        }
+        const response = await CartApiService.addToCart(product)
+        let data = await response.json()
+        if (!response.ok) {
+            console.log(data.message)
+        }else{
+            history.push(CART_ROUTE)
+        }
     }
-
     return (
         <section className="py-5">
             <Container>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Июн 08 2021 г., 22:12
--- Версия сервера: 8.0.15
--- Версия PHP: 7.3.9
+-- Хост: localhost:3306
+-- Время создания: Июн 09 2021 г., 20:35
+-- Версия сервера: 8.0.25-0ubuntu0.20.04.1
+-- Версия PHP: 7.3.28-2+ubuntu20.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -29,12 +29,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cart` (
-  `id_cart` int(11) NOT NULL,
-  `id_product` int(11) DEFAULT NULL,
-  `product_options` int(11) DEFAULT NULL,
-  `product_count` int(11) DEFAULT '0',
-  `product_price` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id_cart` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_product` int DEFAULT NULL,
+  `id_options` int DEFAULT NULL,
+  `product_count` int DEFAULT '0',
+  `product_sum` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `cart`
+--
+
+INSERT INTO `cart` (`id_cart`, `id_user`, `id_product`, `id_options`, `product_count`, `product_sum`) VALUES
+(8, 31, 1, 1, 1, 100),
+(10, 31, 42, 7, 0, 543),
+(11, 31, 44, 9, 0, 324),
+(12, 31, 4, 14, 0, 10);
 
 -- --------------------------------------------------------
 
@@ -43,10 +54,10 @@ CREATE TABLE `cart` (
 --
 
 CREATE TABLE `category` (
-  `id_category` int(11) NOT NULL,
+  `id_category` int NOT NULL,
   `category_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `categiry_description` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `category`
@@ -70,9 +81,9 @@ INSERT INTO `category` (`id_category`, `category_name`, `categiry_description`) 
 --
 
 CREATE TABLE `delivery_method` (
-  `id_delivery_method` int(11) NOT NULL,
+  `id_delivery_method` int NOT NULL,
   `name_delivery` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `delivery_method`
@@ -89,9 +100,9 @@ INSERT INTO `delivery_method` (`id_delivery_method`, `name_delivery`) VALUES
 --
 
 CREATE TABLE `image` (
-  `id_image` int(11) NOT NULL,
+  `id_image` int NOT NULL,
   `image_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `image`
@@ -115,16 +126,16 @@ INSERT INTO `image` (`id_image`, `image_name`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `id_order` int(11) NOT NULL,
-  `id_order_details` int(11) DEFAULT NULL,
-  `id_client` int(11) DEFAULT NULL,
+  `id_order` int NOT NULL,
+  `id_order_details` int DEFAULT NULL,
+  `id_client` int DEFAULT NULL,
   `date_of_order` date DEFAULT NULL,
-  `order_status` int(11) DEFAULT NULL,
-  `payment_method` int(11) DEFAULT NULL,
-  `delivery_method` int(11) DEFAULT NULL,
-  `order_full_price` int(11) DEFAULT NULL,
+  `order_status` int DEFAULT NULL,
+  `payment_method` int DEFAULT NULL,
+  `delivery_method` int DEFAULT NULL,
+  `order_full_price` int DEFAULT NULL,
   `order_comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `orders`
@@ -140,12 +151,12 @@ INSERT INTO `orders` (`id_order`, `id_order_details`, `id_client`, `date_of_orde
 --
 
 CREATE TABLE `order_details` (
-  `id_order_details` int(11) NOT NULL,
-  `id_product` int(11) DEFAULT NULL,
-  `product_options` int(11) DEFAULT NULL,
-  `product_count` int(11) DEFAULT NULL,
-  `product_price` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id_order_details` int NOT NULL,
+  `id_product` int DEFAULT NULL,
+  `product_options` int DEFAULT NULL,
+  `product_count` int DEFAULT NULL,
+  `product_price` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `order_details`
@@ -161,9 +172,9 @@ INSERT INTO `order_details` (`id_order_details`, `id_product`, `product_options`
 --
 
 CREATE TABLE `order_status` (
-  `id_order_status` int(11) NOT NULL,
+  `id_order_status` int NOT NULL,
   `name_order_status` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `order_status`
@@ -180,9 +191,9 @@ INSERT INTO `order_status` (`id_order_status`, `name_order_status`) VALUES
 --
 
 CREATE TABLE `payment_method` (
-  `id_payment_method` int(11) NOT NULL,
+  `id_payment_method` int NOT NULL,
   `name_payment_method` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `payment_method`
@@ -199,15 +210,15 @@ INSERT INTO `payment_method` (`id_payment_method`, `name_payment_method`) VALUES
 --
 
 CREATE TABLE `products` (
-  `id_product` int(11) NOT NULL,
+  `id_product` int NOT NULL,
   `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `product_description` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `product_price` float DEFAULT NULL,
   `product_show` set('NO','YES') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'NO',
-  `product_count` int(11) DEFAULT NULL,
+  `product_count` int DEFAULT NULL,
   `product_keywords` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `product_structure` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `product_structure` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `products`
@@ -231,9 +242,9 @@ INSERT INTO `products` (`id_product`, `product_name`, `product_description`, `pr
 --
 
 CREATE TABLE `product_category` (
-  `id_product` int(11) DEFAULT NULL,
-  `id_category` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id_product` int DEFAULT NULL,
+  `id_category` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_category`
@@ -261,10 +272,10 @@ INSERT INTO `product_category` (`id_product`, `id_category`) VALUES
 --
 
 CREATE TABLE `product_color` (
-  `id_color` int(11) NOT NULL,
+  `id_color` int NOT NULL,
   `color_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `color_code` varchar(100) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `color_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_color`
@@ -283,9 +294,9 @@ INSERT INTO `product_color` (`id_color`, `color_name`, `color_code`) VALUES
 --
 
 CREATE TABLE `product_gallery` (
-  `id_product` int(11) DEFAULT NULL,
-  `id_image` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id_product` int DEFAULT NULL,
+  `id_image` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_gallery`
@@ -309,12 +320,12 @@ INSERT INTO `product_gallery` (`id_product`, `id_image`) VALUES
 --
 
 CREATE TABLE `product_options` (
-  `id_options` int(11) NOT NULL,
-  `id_product` int(11) DEFAULT NULL,
-  `product_type` int(11) DEFAULT NULL,
-  `product_color` int(11) DEFAULT NULL,
-  `product_size` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id_options` int NOT NULL,
+  `id_product` int DEFAULT NULL,
+  `product_type` int DEFAULT NULL,
+  `product_color` int DEFAULT NULL,
+  `product_size` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_options`
@@ -344,9 +355,9 @@ INSERT INTO `product_options` (`id_options`, `id_product`, `product_type`, `prod
 --
 
 CREATE TABLE `product_size` (
-  `id_size` int(11) NOT NULL,
+  `id_size` int NOT NULL,
   `size_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_size`
@@ -367,9 +378,9 @@ INSERT INTO `product_size` (`id_size`, `size_name`) VALUES
 --
 
 CREATE TABLE `product_type` (
-  `id_type` int(11) NOT NULL,
+  `id_type` int NOT NULL,
   `type_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `product_type`
@@ -387,9 +398,9 @@ INSERT INTO `product_type` (`id_type`, `type_name`) VALUES
 --
 
 CREATE TABLE `structure` (
-  `id_structure` int(11) NOT NULL,
+  `id_structure` int NOT NULL,
   `structure_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `structure`
@@ -406,13 +417,13 @@ INSERT INTO `structure` (`id_structure`, `structure_name`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id_user` int(11) NOT NULL,
-  `user_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `id_user` int NOT NULL,
+  `user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `user_email` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `user_password` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `user_phone` varchar(250) COLLATE utf8_bin DEFAULT NULL,
-  `id_status` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `user_phone` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `id_status` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `users`
@@ -431,9 +442,9 @@ INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_password`, `use
 --
 
 CREATE TABLE `users_status` (
-  `id_status` int(11) NOT NULL,
+  `id_status` int NOT NULL,
   `status_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `users_status`
@@ -453,7 +464,8 @@ INSERT INTO `users_status` (`id_status`, `status_name`) VALUES
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id_cart`),
   ADD KEY `fk_cart_products` (`id_product`),
-  ADD KEY `fk_cart_product_options` (`product_options`);
+  ADD KEY `fk_cart_product_options` (`id_options`),
+  ADD KEY `fk_cart_cart` (`id_user`);
 
 --
 -- Индексы таблицы `category`
@@ -581,97 +593,97 @@ ALTER TABLE `users_status`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_category` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `delivery_method`
 --
 ALTER TABLE `delivery_method`
-  MODIFY `id_delivery_method` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_delivery_method` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `image`
 --
 ALTER TABLE `image`
-  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_image` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id_order_details` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_order_details` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `order_status`
 --
 ALTER TABLE `order_status`
-  MODIFY `id_order_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_order_status` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_method`
 --
 ALTER TABLE `payment_method`
-  MODIFY `id_payment_method` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_payment_method` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_product` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT для таблицы `product_color`
 --
 ALTER TABLE `product_color`
-  MODIFY `id_color` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_color` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `product_options`
 --
 ALTER TABLE `product_options`
-  MODIFY `id_options` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_options` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `product_size`
 --
 ALTER TABLE `product_size`
-  MODIFY `id_size` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_size` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `product_type`
 --
 ALTER TABLE `product_type`
-  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_type` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `structure`
 --
 ALTER TABLE `structure`
-  MODIFY `id_structure` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_structure` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT для таблицы `users_status`
 --
 ALTER TABLE `users_status`
-  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_status` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -681,7 +693,8 @@ ALTER TABLE `users_status`
 -- Ограничения внешнего ключа таблицы `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `fk_cart_product_options` FOREIGN KEY (`product_options`) REFERENCES `product_options` (`id_options`),
+  ADD CONSTRAINT `fk_cart_cart` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `fk_cart_product_options` FOREIGN KEY (`id_options`) REFERENCES `product_options` (`id_options`),
   ADD CONSTRAINT `fk_cart_products` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`);
 
 --

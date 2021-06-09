@@ -10,3 +10,8 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const SELECTED_CATEGORY = "SELECTED_CATEGORY";
 export const SELECTED_TYPE = "SELECTED_TYPE";
 
+/********** CART ACTION TYPES *************** */
+export const FETCH_CART_STARTED = "FETCH_CART_STARTED";
+export const FETCH_CART_FAILURE = "FETCH_CART_FAILURE";
+export const FETCH_CART_SUCCESS = "FETCH_CART_SUCCESS";
+

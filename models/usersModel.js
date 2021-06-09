@@ -2,9 +2,6 @@ const Database = require('./DB');
 const bcrypt = require('bcrypt');
 
 
-const generateJwt = () => {
-
-}
 
 class UsersModel {
     isExists(userEmail, callback) {
@@ -30,6 +27,7 @@ class UsersModel {
                 success: false,
                 msg: 'User email is required',
             });
+
         }
 
         if (!userPassword) {
