@@ -33,9 +33,12 @@ class productsController {
         }
     }
 
-    getAllProducts(req, res) {
-        productsModel.getAllProducts(result => {
+    getAllProducts(req, res, next) {
+        productsModel.getAllProducts('', result => {
             const { success, msg } = result;
+            if (!success) {
+                return next(ApiError.badRequest({msg}))
+            }
             res.json({msg});
         })
     }
@@ -68,8 +71,6 @@ class productsController {
             }
         })
     }
-
-
 }
 
 module.exports = new productsController();

@@ -15,6 +15,7 @@ const ProductPage = () => {
     const [size, setSize] = useState(null)
 
     useEffect(() => {
+
         async function fetchData() {
             console.log('render')
             let query = ''
@@ -30,20 +31,21 @@ const ProductPage = () => {
                 setOptions(data.options)
             }
         }
-
         fetchData();
-    }, [id, type, color, size]);
+    }, [id, color, size]);
 
     // console.log('info', info)
     // console.log('options', options)
 
     const clickTypeHandler = (id) => {
         // console.log('TYPE_ID', id)
+        setColor('')
         setType(id)
     }
 
     const clickColorHandler = (id) => {
         // console.log('COLOR_ID', id)
+        setSize('')
         setColor(id)
     }
 
@@ -58,7 +60,9 @@ const ProductPage = () => {
                 <Row>
                     <Col lg={4}>
                         {info.image_name &&
-                        <Image src={apiHost + info.image_name}/>
+                            <div className="shadow rounded single-product-image">
+                                <Image src={apiHost + info.image_name}/>
+                            </div>
                         }
 
                     </Col>
@@ -82,14 +86,14 @@ const ProductPage = () => {
                         <h4>Types</h4>
                         <ListGroup horizontal>
                             {
-                                info.id_type &&
-                                info.id_type.split(',').map((typeId, i) =>
+                                options.id_type &&
+                                options.id_type.split(',').map((typeId, i) =>
                                     <ListGroup.Item
                                         active={typeId === type}
                                         onClick={() => clickTypeHandler(typeId)}
                                         key={i}
                                     >
-                                        {info.type_name.split(',')[i]}
+                                        {options.type_name.split(',')[i]}
                                     </ListGroup.Item>)
                             }
                         </ListGroup>

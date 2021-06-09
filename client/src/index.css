@@ -29,3 +29,16 @@ img{
 .price{
   font-size: 30px;
 }
+
+.rounded {
+  border-radius: 0.85rem!important;
+}
+
+.card, .single-product-image{
+  overflow: hidden;
+}
+
+.single-product-image img{
+  width: 100%;
+  object-fit: cover;
+}

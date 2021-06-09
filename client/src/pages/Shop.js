@@ -18,21 +18,23 @@ const Shop = () => {
     }, [dispatch])
 
     return (
-        <Container>
-            <Row>
-                <Col md={3}>
-                    <CategoryBar/>
-                </Col>
-                <Col md={9}>
-                    <TypeBar/>
-                    {fetchingProducts && <Loader/>}
-                    {productsError && <ServerError/>}
-                    {!productsError && !fetchingProducts && productList && (
-                        <ProductList products={productList}/>
-                    )}
-                </Col>
-            </Row>
-        </Container>
+        <section className="py-5">
+            <Container>
+                <Row>
+                    <Col md={3}>
+                        <CategoryBar/>
+                    </Col>
+                    <Col md={9}>
+                        <TypeBar/>
+                        {fetchingProducts && <Loader/>}
+                        {productsError && <ServerError/>}
+                        {!productsError && !fetchingProducts && productList && (
+                            <ProductList products={productList}/>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+        </section>
     );
 };
 
