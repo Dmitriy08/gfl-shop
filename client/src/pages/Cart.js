@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {loadCart} from "../actions/cart";
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Col, Container, Row, Table} from "react-bootstrap";
 import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";
 import {SHOP_ROUTE} from "../utils/consts";
@@ -35,9 +35,10 @@ const Cart = () => {
                                 </thead>
                                 <tbody>
                                 {cartItems.map(item =>
-                                    <tr>
+                                    <tr key={item.id_cart}>
                                         <td>
                                             {item.product_name}
+                                            &nbsp;<small>({item.type_name},{item.color_name},{item.size_name})</small>
                                         </td>
                                         <td>
                                             {item.product_price}

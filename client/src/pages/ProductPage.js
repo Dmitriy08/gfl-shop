@@ -19,7 +19,9 @@ const ProductPage = () => {
     const [color, setColor] = useState(null)
     const [size, setSize] = useState(null)
 
-    const product_count = 0
+    const [product_count, setProductCount] = useState(1)
+
+
     useEffect(() => {
         async function fetchData() {
             console.log('render')
@@ -66,7 +68,7 @@ const ProductPage = () => {
             'id_user': token,
             'id_product': info.id_product,
             'id_options': +options.id_options,
-            'product_count': product_count,
+            'product_count': +product_count,
             'product_sum': info.product_price
         }
         const response = await CartApiService.addToCart(product)
@@ -76,6 +78,13 @@ const ProductPage = () => {
         }else{
             history.push(CART_ROUTE)
         }
+    }
+
+    const countProduct = (num) => {
+        if(num > info.product_count){
+            return
+        }
+        setProductCount(num)
     }
     return (
         <section className="py-5">
@@ -87,7 +96,6 @@ const ProductPage = () => {
                             <Image src={apiHost + info.image_name}/>
                         </div>
                         }
-
                     </Col>
                     <Col>
                         <h2>{info.product_name}</h2>
@@ -100,6 +108,12 @@ const ProductPage = () => {
                             <div className="price mr-5">
                                 {info.product_price} <span>$</span>
                             </div>
+                            <input
+                                onChange={(e)=>countProduct(+e.target.value)}
+                                className="form-control mr-3 number-product"
+                                type="number"
+                                value={product_count}
+                            />
                             <Button
                                 onClick={()=> addToCart()}
                                 variant="primary"
