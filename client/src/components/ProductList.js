@@ -3,7 +3,6 @@ import {Row} from "react-bootstrap";
 import ProductItem from "./ProductItem";
 
 const ProductList = ({products}) => {
-    console.log(products)
     return (
         <Row className="d-flex">
             {products.map(product =>

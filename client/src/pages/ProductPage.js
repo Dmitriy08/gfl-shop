@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Image, ListGroup, Row} from "react-bootstrap";
-import {useParams} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import ProductsApiService from "../services/products";
+import {useSelector} from "react-redux";
+import {CART_ROUTE, LOGIN_ROUTE} from "../utils/consts";
 
 const apiHost = process.env.REACT_APP_API_URL;
 
 const ProductPage = () => {
+    const user = useSelector(state => state.user);
+    const history = useHistory();
     const {id} = useParams()
     const [info, setInfo] = useState({})
     const [options, setOptions] = useState({})
@@ -33,29 +37,29 @@ const ProductPage = () => {
         fetchData();
     }, [id, type, color, size]);
 
-    console.log('info', info)
-    console.log('options', options)
-
-
     const clickTypeHandler = (id) => {
-        // console.log('TYPE_ID', id)
         setType(id)
     }
 
     const clickColorHandler = (id) => {
-        // console.log('COLOR_ID', id)
         setColor(id)
     }
 
     const clickSizeHandler = (id) => {
-        // console.log('SIZE_ID', id)
         setSize(id)
     }
 
-    const resetOptionsHandler = () =>{
+    const resetOptionsHandler = () => {
         setSize('')
         setColor('')
         setType('')
+    }
+
+    const addToCart = () => {
+        if(!user.isAuth){
+            history.push(LOGIN_ROUTE)
+        }
+        history.push(CART_ROUTE)
     }
 
     return (
@@ -64,16 +68,13 @@ const ProductPage = () => {
                 <Row>
                     <Col lg={4}>
                         {info.image_name &&
-                            <div className="shadow rounded single-product-image">
-                                <Image src={apiHost + info.image_name}/>
-                            </div>
+                        <div className="shadow rounded single-product-image">
+                            <Image src={apiHost + info.image_name}/>
+                        </div>
                         }
 
                     </Col>
                     <Col>
-                        <h5>Type: {type}</h5>
-                        <h5>Color: {color}</h5>
-                        <h5>Size: {size}</h5>
                         <h2>{info.product_name}</h2>
                         <p><strong>Category: </strong>{info.category_name}</p>
                         <p><strong>Structure: </strong>{info.structure_name}</p>
@@ -84,7 +85,13 @@ const ProductPage = () => {
                             <div className="price mr-5">
                                 {info.product_price} <span>$</span>
                             </div>
-                            <Button variant="primary">Buy Now</Button>
+                            <Button
+                                onClick={()=> addToCart()}
+                                variant="primary"
+                                disabled={!type || !size || !color}
+                            >
+                                Buy Now
+                            </Button>
                         </div>
                         <hr/>
                         <h4>Types</h4>
@@ -101,7 +108,12 @@ const ProductPage = () => {
                                     </ListGroup.Item>
                                 )
                             }
-                            <Button onClick={()=>resetOptionsHandler()} variant={"danger"} className="ml-5">
+                            <Button
+                                disabled={!type && !size && !color}
+                                onClick={() => resetOptionsHandler()}
+                                variant={"danger"}
+                                className="ml-5"
+                            >
                                 Reset Options
                             </Button>
                         </ListGroup>
@@ -113,7 +125,7 @@ const ProductPage = () => {
                                 options.id_color.split(',').map((colorId, i) =>
                                     <ListGroup.Item
                                         key={i}
-                                        active={!(colorId === color)}
+                                        active={(colorId === color)}
                                         style={{backgroundColor: options.color_code.split(',')[i]}}
                                         onClick={() => clickColorHandler(colorId)}
                                     >
