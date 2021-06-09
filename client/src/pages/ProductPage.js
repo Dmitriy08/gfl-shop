@@ -15,7 +15,6 @@ const ProductPage = () => {
     const [size, setSize] = useState(null)
 
     useEffect(() => {
-
         async function fetchData() {
             console.log('render')
             let query = ''
@@ -32,26 +31,31 @@ const ProductPage = () => {
             }
         }
         fetchData();
-    }, [id, color, size]);
+    }, [id, type, color, size]);
 
-    // console.log('info', info)
-    // console.log('options', options)
+    console.log('info', info)
+    console.log('options', options)
+
 
     const clickTypeHandler = (id) => {
         // console.log('TYPE_ID', id)
-        setColor('')
         setType(id)
     }
 
     const clickColorHandler = (id) => {
         // console.log('COLOR_ID', id)
-        setSize('')
         setColor(id)
     }
 
     const clickSizeHandler = (id) => {
         // console.log('SIZE_ID', id)
         setSize(id)
+    }
+
+    const resetOptionsHandler = () =>{
+        setSize('')
+        setColor('')
+        setType('')
     }
 
     return (
@@ -94,8 +98,12 @@ const ProductPage = () => {
                                         key={i}
                                     >
                                         {options.type_name.split(',')[i]}
-                                    </ListGroup.Item>)
+                                    </ListGroup.Item>
+                                )
                             }
+                            <Button onClick={()=>resetOptionsHandler()} variant={"danger"} className="ml-5">
+                                Reset Options
+                            </Button>
                         </ListGroup>
                         <hr/>
                         <h4>Colors</h4>
