@@ -15,7 +15,7 @@ const ProductItem = ({product}) => {
                     <Card.Text>
                         {product.product_price} $
                     </Card.Text>
-                    <Button variant="primary">Buy Now</Button>
+                    <Button onClick={() => history.push(PRODUCT_ROUTE + '/' + product.id_product)} variant="primary">Select Options</Button>
                 </Card.Body>
             </Card>
         </Col>
