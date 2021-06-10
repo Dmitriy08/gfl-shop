@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Июн 09 2021 г., 20:35
+-- Время создания: Июн 10 2021 г., 19:03
 -- Версия сервера: 8.0.25-0ubuntu0.20.04.1
--- Версия PHP: 7.3.28-2+ubuntu20.04.1+deb.sury.org+1
+-- Версия PHP: 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -42,10 +42,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id_cart`, `id_user`, `id_product`, `id_options`, `product_count`, `product_sum`) VALUES
-(8, 31, 1, 1, 1, 100),
-(10, 31, 42, 7, 0, 543),
-(11, 31, 44, 9, 0, 324),
-(12, 31, 4, 14, 0, 10);
+(25, 31, 4, 14, 2, 10),
+(26, 31, 1, 1, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -127,22 +125,25 @@ INSERT INTO `image` (`id_image`, `image_name`) VALUES
 
 CREATE TABLE `orders` (
   `id_order` int NOT NULL,
-  `id_order_details` int DEFAULT NULL,
-  `id_client` int DEFAULT NULL,
-  `date_of_order` date DEFAULT NULL,
-  `order_status` int DEFAULT NULL,
+  `id_user` int DEFAULT NULL,
+  `country` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `city` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `payment_method` int DEFAULT NULL,
   `delivery_method` int DEFAULT NULL,
+  `order_comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `order_full_price` int DEFAULT NULL,
-  `order_comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
+  `date_of_order` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `order_status` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id_order`, `id_order_details`, `id_client`, `date_of_order`, `order_status`, `payment_method`, `delivery_method`, `order_full_price`, `order_comments`) VALUES
-(1, 1, 2, '2021-05-06', 2, 2, 1, 100, 'тест');
+INSERT INTO `orders` (`id_order`, `id_user`, `country`, `city`, `address`, `payment_method`, `delivery_method`, `order_comments`, `order_full_price`, `date_of_order`, `order_status`) VALUES
+(3, 31, 'dsfdsfsdf', 'dsfdsfdsf', 'dsfdsfdsf', 1, 1, 'dsfdsfdsf', 1222, '2021-06-10T16:00:17.707Z', 2),
+(4, 31, 'dsfsdfds', 'fdsfds', 'sdfdsf', 1, 1, 'sdfdsfs', 2, '2021-06-10T16:01:09.036Z', 2);
 
 -- --------------------------------------------------------
 
@@ -155,15 +156,22 @@ CREATE TABLE `order_details` (
   `id_product` int DEFAULT NULL,
   `product_options` int DEFAULT NULL,
   `product_count` int DEFAULT NULL,
-  `product_price` int DEFAULT NULL
+  `product_sum` int DEFAULT NULL,
+  `id_order` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 --
 -- Дамп данных таблицы `order_details`
 --
 
-INSERT INTO `order_details` (`id_order_details`, `id_product`, `product_options`, `product_count`, `product_price`) VALUES
-(1, 1, 1, 1, 50);
+INSERT INTO `order_details` (`id_order_details`, `id_product`, `product_options`, `product_count`, `product_sum`, `id_order`) VALUES
+(1, 1, 1, 1, 50, NULL),
+(2, 1, 1, 2, 100, 3),
+(3, 4, 14, 2, 10, 3),
+(4, 40, 5, 1, 234, 3),
+(5, 41, 15, 1, 444, 3),
+(6, 44, 9, 1, 324, 3),
+(7, 5, 4, 2, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -433,7 +441,8 @@ INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_password`, `use
 (1, 'Admin', 'Admin', 'admin', '123456789', 1),
 (2, 'user', 'Иван', 'user', '234567899', 2),
 (30, 'adminadmin', 'adminadmin', '$2b$05$qo5B.wqZ9dlutDC1zyEXYOfqsLrz5UJeVQT08dE0t7bTuHE4gTg82', '1231312', 2),
-(31, 'admin', 'admin', '$2b$05$iMqQe4y/8aWnaY/Zr7Qg4Oy286BMvGlhvdr6KNrZwLUinz/JCGZdq', '213213123', 2);
+(31, 'admin', 'admin', '$2b$05$iMqQe4y/8aWnaY/Zr7Qg4Oy286BMvGlhvdr6KNrZwLUinz/JCGZdq', '213213123', 2),
+(32, 'qweqeqweqw', 'qweqweqwe', '$2b$05$YPCOr14zRNbRbtZO46d.5.1UScH8xnCMm26MIKLWR5.O8ZosDg8W.', '24234234', 2);
 
 -- --------------------------------------------------------
 
@@ -490,8 +499,7 @@ ALTER TABLE `image`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id_order`),
-  ADD KEY `fk_orders_order_details` (`id_order_details`),
-  ADD KEY `fk_orders_clients` (`id_client`),
+  ADD KEY `fk_orders_clients` (`id_user`),
   ADD KEY `fk_orders_order_status` (`order_status`),
   ADD KEY `fk_orders_payment_method` (`payment_method`),
   ADD KEY `fk_orders_delivery_method` (`delivery_method`);
@@ -502,7 +510,8 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id_order_details`),
   ADD KEY `fk_order_details_products` (`id_product`),
-  ADD KEY `fk_order_details` (`product_options`);
+  ADD KEY `fk_order_details` (`product_options`),
+  ADD KEY `fk_order_details_orders` (`id_order`);
 
 --
 -- Индексы таблицы `order_status`
@@ -593,7 +602,7 @@ ALTER TABLE `users_status`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
@@ -617,13 +626,13 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id_order_details` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_order_details` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `order_status`
@@ -677,7 +686,7 @@ ALTER TABLE `structure`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT для таблицы `users_status`
@@ -701,9 +710,8 @@ ALTER TABLE `cart`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_orders_clients` FOREIGN KEY (`id_client`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `fk_orders_clients` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
   ADD CONSTRAINT `fk_orders_delivery_method` FOREIGN KEY (`delivery_method`) REFERENCES `delivery_method` (`id_delivery_method`),
-  ADD CONSTRAINT `fk_orders_order_details` FOREIGN KEY (`id_order_details`) REFERENCES `order_details` (`id_order_details`),
   ADD CONSTRAINT `fk_orders_order_status` FOREIGN KEY (`order_status`) REFERENCES `order_status` (`id_order_status`),
   ADD CONSTRAINT `fk_orders_payment_method` FOREIGN KEY (`payment_method`) REFERENCES `payment_method` (`id_payment_method`);
 
@@ -712,6 +720,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_details`
   ADD CONSTRAINT `fk_order_details` FOREIGN KEY (`product_options`) REFERENCES `product_options` (`id_options`),
+  ADD CONSTRAINT `fk_order_details_orders` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`),
   ADD CONSTRAINT `fk_order_details_products` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`);
 
 --
