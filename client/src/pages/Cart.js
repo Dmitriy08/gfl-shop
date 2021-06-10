@@ -4,7 +4,7 @@ import {loadCart} from "../actions/cart";
 import {Col, Container, Row, Table} from "react-bootstrap";
 import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";
-import {SHOP_ROUTE} from "../utils/consts";
+import {CHECKOUT_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {NavLink} from "react-router-dom";
 
 const Cart = () => {
@@ -41,13 +41,13 @@ const Cart = () => {
                                             &nbsp;<small>({item.type_name},{item.color_name},{item.size_name})</small>
                                         </td>
                                         <td>
-                                            {item.product_price}
+                                            {item.product_price} $
                                         </td>
                                         <td>
                                             {item.product_count}
                                         </td>
                                         <td>
-                                            {item.product_price * item.product_count}
+                                            {item.product_price * item.product_count} $
                                         </td>
                                     </tr>
                                 )}
@@ -57,6 +57,9 @@ const Cart = () => {
                     )}
                     <Col lg={6}>
                         <NavLink className="btn btn-primary" to={SHOP_ROUTE}>Go Back To Shop</NavLink>
+                    </Col>
+                    <Col lg={6} className="text-right">
+                        <NavLink className="btn btn-primary" to={CHECKOUT_ROUTE}>Proceed To Checkout</NavLink>
                     </Col>
                 </Row>
             </Container>

@@ -3,7 +3,16 @@ import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
 import Shop from "./pages/Shop";
 import Auth from "./pages/Auth";
-import {ADMIN_ROUTE, CART_ROUTE, PRODUCT_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./utils/consts";
+import Checkout from "./pages/Checkout";
+import {
+    ADMIN_ROUTE,
+    CART_ROUTE,
+    PRODUCT_ROUTE,
+    LOGIN_ROUTE,
+    REGISTRATION_ROUTE,
+    SHOP_ROUTE,
+    CHECKOUT_ROUTE
+} from "./utils/consts";
 
 export const authRoutes = [
     {
@@ -13,6 +22,10 @@ export const authRoutes = [
     {
         path: CART_ROUTE,
         Component: Cart
+    },
+    {
+        path: CHECKOUT_ROUTE,
+        Component: Checkout
     },
 ]
 
