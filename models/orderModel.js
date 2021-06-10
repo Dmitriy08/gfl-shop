@@ -42,6 +42,22 @@ class OrderModel {
             }
         );
     }
+
+    async getOrders(id, callback){
+        await Database.query('SELECT orders.id_order, orders.id_user, orders.country, orders.city, orders.state, orders.delivery_address, orders.postcode, orders.order_comments, orders.order_full_price, orders.date_of_order, payment_method.name_payment_method, delivery_method.name_delivery, order_status.name_order_status FROM orders, payment_method, delivery_method, order_status WHERE orders.payment_method=payment_method.id_payment_method and orders.delivery_method=delivery_method.id_delivery_method and orders.order_status=order_status.id_order_status and orders.id_user=?',[id], result => {
+            const {success, msg} = result;
+            if (!success) return callback(msg);
+            return callback(result);
+        })
+    }
+
+    async getOrder(id, callback){
+        await Database.query('SELECT orders.id_order, orders.id_user, orders.country, orders.city, orders.state, orders.delivery_address, orders.postcode, orders.order_comments, orders.order_full_price, orders.date_of_order, payment_method.name_payment_method, delivery_method.name_delivery, order_status.name_order_status FROM orders, payment_method, delivery_method, order_status WHERE orders.payment_method=payment_method.id_payment_method and orders.delivery_method=delivery_method.id_delivery_method and orders.order_status=order_status.id_order_status and orders.id_order=?',[id], result => {
+            const {success, msg} = result;
+            if (!success) return callback(msg);
+            return callback(result);
+        })
+    }
 }
 
 module.exports = new OrderModel();

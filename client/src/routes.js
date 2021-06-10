@@ -11,8 +11,9 @@ import {
     LOGIN_ROUTE,
     REGISTRATION_ROUTE,
     SHOP_ROUTE,
-    CHECKOUT_ROUTE
+    CHECKOUT_ROUTE, ORDERS_ROUTE
 } from "./utils/consts";
+import Orders from "./pages/Orders";
 
 export const authRoutes = [
     {
@@ -26,6 +27,11 @@ export const authRoutes = [
     {
         path: CHECKOUT_ROUTE,
         Component: Checkout
+    },
+
+    {
+        path: ORDERS_ROUTE,
+        Component: Orders
     },
 ]
 

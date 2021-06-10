@@ -81,7 +81,7 @@ const ProductPage = () => {
     }
 
     const countProduct = (num) => {
-        if(num > info.product_count){
+        if(num > info.product_count || num <1 ){
             return
         }
         setProductCount(num)
