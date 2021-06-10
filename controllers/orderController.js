@@ -36,8 +36,8 @@ class orderController {
 
     getOrders(req, res, next) {
         const {token} = req.query;
-        let idUser = Buffer.from(token, 'base64').toString('utf-8').split('.')[0];
-        orderModel.getOrders(idUser, callback => {
+        const decodedEmail = jwt_decode(token).email
+        orderModel.getOrders(decodedEmail, callback => {
             const { success, msg } = callback;
 
             if (!success || msg.length === 0) {

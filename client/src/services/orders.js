@@ -9,7 +9,7 @@ class OrderApiService {
         }),
         body: JSON.stringify(cart)
     });
-    getOrders = async () => await fetch(`${apiHost}api/order/get`)
-    getProduct = async (id) => await fetch(`${apiHost}api/products/${id}`)
+    getOrders = async (token) => await fetch(`${apiHost}api/order/get?token=${token}`)
+    getOrder = async (id) => await fetch(`${apiHost}api/order/get/${id}`)
 }
 export default new OrderApiService();

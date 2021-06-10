@@ -24,7 +24,6 @@ const ProductPage = () => {
 
     useEffect(() => {
         async function fetchData() {
-            console.log('render')
             let query = ''
             if (type) query += `type=${type}&`;
             if (color) query += `color=${color}&`;

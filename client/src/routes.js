@@ -4,6 +4,8 @@ import Cart from "./pages/Cart";
 import Shop from "./pages/Shop";
 import Auth from "./pages/Auth";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
+import OrderPage from "./pages/OrderPage";
 import {
     ADMIN_ROUTE,
     CART_ROUTE,
@@ -13,7 +15,6 @@ import {
     SHOP_ROUTE,
     CHECKOUT_ROUTE, ORDERS_ROUTE
 } from "./utils/consts";
-import Orders from "./pages/Orders";
 
 export const authRoutes = [
     {
@@ -32,6 +33,10 @@ export const authRoutes = [
     {
         path: ORDERS_ROUTE,
         Component: Orders
+    },
+    {
+        path: ORDERS_ROUTE + '/:id',
+        Component: OrderPage
     },
 ]
 

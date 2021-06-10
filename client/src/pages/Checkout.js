@@ -67,16 +67,6 @@ const Checkout = () => {
         }else{
             history.push(SHOP_ROUTE)
         }
-
-        console.log(token)
-        console.log(country)
-        console.log(city)
-        console.log(address)
-        console.log(+delivery)
-        console.log(+payment)
-        console.log(addInfo)
-        console.log(+totalPrice())
-        console.log(d.toISOString())
     }
 
     return (

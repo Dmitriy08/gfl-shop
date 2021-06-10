@@ -27,7 +27,7 @@ class cartController {
         cartModel.getCartInfo(decodedEmail, callback =>{
             const { success, msg } = callback;
             if (!success || msg.length === 0) {
-                return next(ApiError.badRequest('Something went wrong'))
+                return next(ApiError.badRequest('Your cart is empty'))
             }
             try {
                 res.json({msg})

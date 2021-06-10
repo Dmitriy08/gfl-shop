@@ -14,13 +14,18 @@ const Cart = () => {
     useEffect(() => {
         dispatch(loadCart())
     }, [dispatch])
-    console.log(cartItems)
     return (
         <section className="py-5">
             <Container>
                 <Row>
                     {fetchingCart && <Loader/>}
                     {cartError && <ServerError/>}
+                    {!cartItems && (
+                        <Col xl={12}>
+                            <h2>You cart is empty</h2>
+                        </Col>
+
+                    )}
                     {!cartError && !fetchingCart && cartItems && (
                         <Col xl={12}>
                             <h1>Cart: {cartItems.length}</h1>
@@ -59,7 +64,10 @@ const Cart = () => {
                         <NavLink className="btn btn-primary" to={SHOP_ROUTE}>Go Back To Shop</NavLink>
                     </Col>
                     <Col lg={6} className="text-right">
-                        <NavLink className="btn btn-primary" to={CHECKOUT_ROUTE}>Proceed To Checkout</NavLink>
+                        {cartItems && (
+                            <NavLink className="btn btn-primary" to={CHECKOUT_ROUTE}>Proceed To Checkout</NavLink>
+                        )}
+
                     </Col>
                 </Row>
             </Container>
