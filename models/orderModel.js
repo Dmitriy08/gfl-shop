@@ -10,9 +10,12 @@ class OrderModel {
             }});
     }
 
-    async addOrder(id_user, country, city, state, delivery_address, postcode, payment_method, delivery_method, order_comments, order_full_price, date_of_order, callback) {
-        Database.query(`INSERT INTO orders VALUES (NULL, ${+id_user}, '${country}', '${city}', '${state}', '${delivery_address}', '${postcode}', ${+payment_method}, ${+delivery_method}, '${order_comments}', ${+order_full_price}, '${date_of_order}', 2)`, async result => {
+    async addOrder(user_email, country, city, address, deliveryMethod, paymentMethod, addInfo, orderTotalPrice, date_of_order, callback) {
+        const [userInfo] = await Database.promise().execute(`SELECT id_user FROM users WHERE user_email='${user_email}' LIMIT 1`);
+        const id_user = userInfo[0].id_user
+        Database.query(`INSERT INTO orders VALUES (NULL, ${+id_user}, '${country}', '${city}', '${address}', ${+paymentMethod}, ${+deliveryMethod}, '${addInfo}', ${orderTotalPrice}, '${date_of_order}', 2)`, async result => {
                 const {success, msg} = result;
+
                 if (!success) return callback(msg);
 
                 let [id] = await Database.promise().execute('SELECT MAX(orders.id_order) FROM orders WHERE orders.id_user=?', [id_user])

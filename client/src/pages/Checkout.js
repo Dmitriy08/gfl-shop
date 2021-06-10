@@ -5,11 +5,14 @@ import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";
 import {loadCart} from "../actions/cart";
 import OrderApiService from '../services/orders'
+import { SHOP_ROUTE} from "../utils/consts";
+import {useHistory} from "react-router-dom";
 
 const Checkout = () => {
     const dispatch = useDispatch();
     const {fetchingCart, cart, cartError} = useSelector(state => state.cart);
     const {msg: cartItems} = cart || {};
+    const history = useHistory();
 
     const [deliveryMethod, setDeliveryMethod] = useState([])
     const [paymentMethod, setPaymentMethod] = useState([])
@@ -17,12 +20,11 @@ const Checkout = () => {
     const [country, setCountry] = useState('')
     const [city, setCity] = useState('')
     const [address, setAddress] = useState('')
-    const [delivery, setDelivery] = useState([])
-    const [payment, setPayment] = useState([])
+    const [delivery, setDelivery] = useState('')
+    const [payment, setPayment] = useState('')
     const [addInfo, setAddInfo] = useState('')
 
     useEffect(() => {
-        console.log('render')
         async function fetchData() {
             const response = await OrderApiService.getCheckoutInfo();
             const data = await response.json()
@@ -31,25 +33,50 @@ const Checkout = () => {
             } else {
                 setDeliveryMethod(data.delivery_method)
                 setPaymentMethod(data.payment_method)
+
+                setDelivery(data.delivery_method[0].id)
+                setPayment(data.payment_method[0].id)
             }
         }
         fetchData();
         dispatch(loadCart())
     }, [dispatch])
-    console.log(country)
-    console.log(city)
-    console.log(address)
-    console.log(delivery)
-    console.log(payment)
-    console.log(addInfo)
+
     const totalPrice = () => {
         return cartItems.reduce((sum, product) => sum + product.product_price * product.product_count, 0).toFixed(2);
     }
 
-    const placeOrder = () => {
-        // const order = {
-        //
-        // }
+    const placeOrder = async () => {
+        const token = localStorage.getItem('token')
+        let d = new Date();
+        const cart = {
+            token: token,
+            country: country,
+            city: city,
+            address: address,
+            paymentMethod: +payment,
+            deliveryMethod: +delivery,
+            addInfo: addInfo,
+            orderTotalPrice: +totalPrice(),
+            date_of_order: d.toISOString()
+        }
+        const response = await OrderApiService.addToOrder(cart)
+        let data = await response.json()
+        if (!response.ok) {
+            console.log(data.message)
+        }else{
+            history.push(SHOP_ROUTE)
+        }
+
+        console.log(token)
+        console.log(country)
+        console.log(city)
+        console.log(address)
+        console.log(+delivery)
+        console.log(+payment)
+        console.log(addInfo)
+        console.log(+totalPrice())
+        console.log(d.toISOString())
     }
 
     return (
@@ -75,15 +102,15 @@ const Checkout = () => {
                                 <Form.Label>Delivery</Form.Label>
                                 <Form.Control as="select" onChange={(e)=> setDelivery(e.target.value)}>
                                     {deliveryMethod.map(item=>(
-                                        <option key={item.id}>{item.name}</option>
+                                        <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Payment method</Form.Label>
-                                <Form.Control onChange={(e)=> setPayment(e.target.value)} as="select">
+                                <Form.Control  onChange={(e)=> setPayment(e.target.value)} value={payment} as="select">
                                     {paymentMethod.map(item=>(
-                                        <option key={item.id}>{item.name}</option>
+                                        <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
@@ -132,7 +159,11 @@ const Checkout = () => {
                                 </tr>
                                 </tfoot>
                             </Table>
-                            <Button onClick={() => {placeOrder()}}>Place Order</Button>
+                            {}
+                            <Button
+                                disabled={!country || !city || !address || !delivery || !payment || !addInfo}
+                                onClick={() => {placeOrder()}}
+                            >Place Order</Button>
                         </Col>
                     )}
 
