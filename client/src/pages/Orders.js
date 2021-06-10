@@ -20,6 +20,12 @@ const Orders = () => {
         }
         fetchData();
     }, [])
+
+    const convertDate = (dateISO) =>{
+        const date = new Date(dateISO);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    }
+
     return (
         <section className="py-5">
             <Container>
@@ -29,28 +35,35 @@ const Orders = () => {
                         <Table striped bordered hover>
                             <thead>
                             <tr>
-                                <th>Product Name</th>
-                                <th>Product Price</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
+                                <th>#</th>
+                                <th>Date of order</th>
+                                <th>Payment method</th>
+                                <th>Delivery method</th>
+                                <th>Status</th>
+                                <th>Total price</th>
                                 <th>Details</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {orders.map(item =>
+                            {orders.map((item, index) =>
                                 <tr key={item.id_order}>
                                     <td>
-                                        {item.product_name}
-                                        &nbsp;<small>({item.type_name},{item.color_name},{item.size_name})</small>
+                                        {index+1}
                                     </td>
                                     <td>
-                                        {item.product_price} $
+                                        {convertDate(item.date_of_order)}
                                     </td>
                                     <td>
-                                        {item.product_count}
+                                        {item.name_payment_method}
                                     </td>
                                     <td>
-                                        {item.product_price * item.product_count} $
+                                        {item.name_delivery}
+                                    </td>
+                                    <td>
+                                        {item.name_order_status}
+                                    </td>
+                                    <td>
+                                        {item.order_full_price} $
                                     </td>
                                     <td>
                                         <Button
