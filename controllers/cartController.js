@@ -30,7 +30,7 @@ class cartController {
                 return next(ApiError.badRequest('Your cart is empty'))
             }
             try {
-                res.json({msg})
+                res.json(msg)
             } catch (e) {
                 res.json({message: e.message})
             }
