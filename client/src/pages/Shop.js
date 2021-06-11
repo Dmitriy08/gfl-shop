@@ -21,11 +21,7 @@ const Shop = () => {
         <section className="py-5">
             <Container>
                 <Row>
-                    <Col md={3}>
-                        <CategoryBar/>
-                    </Col>
-                    <Col md={9}>
-                        <TypeBar/>
+                    <Col className="ml-auto mr-auto" md={9}>
                         {fetchingProducts && <Loader/>}
                         {productsError && <ServerError/>}
                         {!productsError && !fetchingProducts && productList && (

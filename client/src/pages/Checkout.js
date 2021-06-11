@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 const Checkout = () => {
     const dispatch = useDispatch();
     const {fetchingCart, cart, cartError} = useSelector(state => state.cart);
-    const {msg: cartItems} = cart || {};
+
     const history = useHistory();
 
     const [deliveryMethod, setDeliveryMethod] = useState([])
@@ -43,7 +43,7 @@ const Checkout = () => {
     }, [dispatch])
 
     const totalPrice = () => {
-        return cartItems.reduce((sum, product) => sum + product.product_price * product.product_count, 0).toFixed(2);
+        return cart.reduce((sum, product) => sum + product.product_price * product.product_count, 0).toFixed(2);
     }
 
     const placeOrder = async () => {
@@ -113,7 +113,7 @@ const Checkout = () => {
 
                     {fetchingCart && <Loader/>}
                     {cartError && <ServerError/>}
-                    {!cartError && !fetchingCart && cartItems && (
+                    {!cartError && !fetchingCart && cart && (
                         <Col lg={4}>
                             <h2>You Order</h2>
                             <Table striped bordered hover className="shadow">
@@ -124,7 +124,7 @@ const Checkout = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {cartItems.map(item =>
+                                {cart.map(item =>
                                 <tr key={item.id_cart}>
                                     <td>
                                         {item.product_name}

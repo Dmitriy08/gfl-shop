@@ -44,7 +44,6 @@ export const loadCart = () => async (dispatch) => {
         const cart = await cartApiService
             .getCart(token)
             .then((res) => res.json());
-        console.log(cart)
         dispatch(loadCartSuccess(cart));
     } catch {
         dispatch(loadCartFailure());

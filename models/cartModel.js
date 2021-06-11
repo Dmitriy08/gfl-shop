@@ -19,7 +19,7 @@ class CartModel {
     async addToCart(user_email, id_product, id_options, product_count, product_sum, callback) {
         const [userInfo] = await DB.promise().execute(`SELECT id_user FROM users WHERE user_email='${user_email}' LIMIT 1`);
         const id_user = userInfo[0].id_user
-        console.log(id_user, id_product, id_options, product_count, product_sum);
+
         this.isExistProduct(id_user, id_options, product_count_before => {
             if (product_count_before) {
                 if (product_count_before.product_count + product_count === 0) {
@@ -27,7 +27,7 @@ class CartModel {
                         [product_count_before.id_cart],
                         result => {
                             const {success, msg} = result;
-                            console.log(msg)
+
                             if (!success) return callback(msg);
                             return callback(result);
                         }
@@ -46,7 +46,7 @@ class CartModel {
             } else {
                 DB.query(`INSERT INTO cart VALUES (NULL, '${id_user}', '${id_product}', '${id_options}', '${product_count}', '${product_sum}')`, result => {
                         const {success, msg} = result;
-                        console.log(msg)
+
                         if (!success) return callback(msg);
                         callback(result);
                     }

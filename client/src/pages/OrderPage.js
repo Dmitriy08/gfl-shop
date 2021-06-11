@@ -11,14 +11,12 @@ const OrderPage = () => {
     const user = useSelector(state => state.user);
     useEffect(() => {
         async function fetchData() {
-            console.log()
             const response = await OrdersApiService.getOrder(id);
             const data = await response.json()
             if (!response.ok) {
                 console.log('ERRRRROR', data)
             } else {
                 setOrder(data)
-                console.log(order)
             }
         }
         fetchData();
@@ -59,7 +57,7 @@ const OrderPage = () => {
                                 Order Status
                             </th>
                             <td>
-                                {order.name_order_status} $
+                                {order.name_order_status}
                             </td>
                         </tr>
                         <tr>

@@ -49,7 +49,7 @@ export default function reducer(state = initialState, action) {
 
         case SUB_ITEM_CART:
             let itemId = action.payload
-            console.log(state.cart[itemId].product_count)
+
             if(state.cart[itemId].product_count === 1){
 
                 return {

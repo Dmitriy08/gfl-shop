@@ -68,7 +68,6 @@ export const loadProduct = (id) => async () => {
     return await productsApiService
             .getProduct(id)
             .then((res) => {
-                console.log(res)
                 res.json()
             });
 };

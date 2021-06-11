@@ -28,7 +28,7 @@ const Cart = () => {
                 'product_sum': cart[index].product_price
             }
             const response = await CartApiService.addToCart(product)
-            console.log(response)
+
             let data = await response.json()
             if (!response.ok) {
                 console.log(data.message)
@@ -50,7 +50,7 @@ const Cart = () => {
                 'product_sum': cart[index].product_price
             }
             const response = await CartApiService.addToCart(product)
-            console.log(response)
+
             let data = await response.json()
             if (!response.ok) {
                 console.log(data.message)
@@ -122,7 +122,7 @@ const Cart = () => {
                         <NavLink className="btn btn-primary" to={SHOP_ROUTE}>Go Back To Shop</NavLink>
                     </Col>
                     <Col lg={6} className="text-right">
-                        {cart && (
+                        {cart.length !== 0 && (
                             <NavLink className="btn btn-primary" to={CHECKOUT_ROUTE}>Proceed To Checkout</NavLink>
                         )}
 
