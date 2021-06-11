@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, addItemToCart, loadCart, subItemToCart} from "../actions/cart";
+import {addItemToCart, loadCart, subItemToCart} from "../actions/cart";
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";

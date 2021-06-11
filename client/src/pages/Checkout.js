@@ -5,7 +5,7 @@ import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";
 import {loadCart} from "../actions/cart";
 import OrderApiService from '../services/orders'
-import { SHOP_ROUTE} from "../utils/consts";
+import {ORDERS_ROUTE} from "../utils/consts";
 import {useHistory} from "react-router-dom";
 
 const Checkout = () => {
@@ -65,7 +65,7 @@ const Checkout = () => {
         if (!response.ok) {
             console.log(data.message)
         }else{
-            history.push(SHOP_ROUTE)
+            history.push(ORDERS_ROUTE)
         }
     }
 

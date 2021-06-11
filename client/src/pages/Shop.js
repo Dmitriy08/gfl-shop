@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import CategoryBar from "../components/CategoryBar";
 import ProductList from "../components/ProductList";
-import TypeBar from "../components/TypeBar";
 import {loadProducts} from "../actions/products";
 import Loader from "../components/Loader";
 import ServerError from "../components/ServerError";

@@ -26,7 +26,6 @@ const OrderPage = () => {
         const date = new Date(dateISO);
         return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     }
-    console.log(order)
     return (
     <section className="py-5">
         <Container>
