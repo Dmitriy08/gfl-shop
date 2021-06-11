@@ -67,7 +67,7 @@ class orderController {
             }
 
             try {
-                res.json(msg[0])
+                res.json(msg)
             } catch (e) {
                 res.json({message: e.message})
             }

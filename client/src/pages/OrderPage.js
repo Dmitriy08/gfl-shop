@@ -8,6 +8,7 @@ import {ORDERS_ROUTE} from "../utils/consts";
 const OrderPage = () => {
     const {id} = useParams()
     const [order, setOrder] = useState({})
+    const [orderProducts, setOrderProducts] = useState([])
     const user = useSelector(state => state.user);
     useEffect(() => {
         async function fetchData() {
@@ -16,12 +17,12 @@ const OrderPage = () => {
             if (!response.ok) {
                 console.log('ERRRRROR', data)
             } else {
-                setOrder(data)
+                setOrder(data.orderInfo)
+                setOrderProducts(data.orderProductsInfo)
             }
         }
         fetchData();
     }, [id]);
-
     const convertDate = (dateISO) =>{
         const date = new Date(dateISO);
         return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
@@ -49,6 +50,22 @@ const OrderPage = () => {
                             </th>
                             <td>
                                 {convertDate(order.date_of_order)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Products
+                            </th>
+                            <td>
+                                <ul>
+                                    {orderProducts.map((product, index) => (
+                                        <li key={index}>
+                                            {product.product_name}
+                                           (<small>{product.type_name}, {product.color_name}, {product.size_name}</small>)
+                                        </li>
+                                    ))}
+                                </ul>
+
                             </td>
                         </tr>
                         <tr>
