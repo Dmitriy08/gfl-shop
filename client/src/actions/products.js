@@ -38,19 +38,6 @@ export const activeType = (type) => ({
     },
 })
 
-// export const loadProducts = () => dispatch => {
-//     dispatch(loadProductsStarted());
-//     productsApiService
-//         .getProducts()
-//         .then(response => response.json())
-//         .then(data => {
-//             dispatch(loadProductsSuccess(data));
-//         })
-//         .catch(error => {
-//             dispatch(loadProductsFailure());
-//         })
-// }
-
 export const loadProducts = (page = 1) => async (dispatch) => {
     dispatch(loadProductsStarted());
     try {

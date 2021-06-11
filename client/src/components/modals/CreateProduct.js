@@ -5,10 +5,7 @@ const CreateProduct = ({show, onHide}) => {
     const [value, setValue] = useState('')
 
     const addBrand = () => {
-        // createBrand({name: value}).then(data => {
-        //     setValue('')
-        //     onHide()
-        // })
+
     }
     return (
         <Modal
