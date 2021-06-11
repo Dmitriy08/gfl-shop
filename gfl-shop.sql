@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Июн 10 2021 г., 19:03
+-- Время создания: Июн 11 2021 г., 12:35
 -- Версия сервера: 8.0.25-0ubuntu0.20.04.1
 -- Версия PHP: 7.4.20
 
@@ -42,8 +42,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id_cart`, `id_user`, `id_product`, `id_options`, `product_count`, `product_sum`) VALUES
-(25, 31, 4, 14, 2, 10),
-(26, 31, 1, 1, 1, 100);
+(82, 36, 42, 7, 1, 543),
+(83, 36, 45, 12, 1, 676);
 
 -- --------------------------------------------------------
 
@@ -142,8 +142,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id_order`, `id_user`, `country`, `city`, `address`, `payment_method`, `delivery_method`, `order_comments`, `order_full_price`, `date_of_order`, `order_status`) VALUES
-(3, 31, 'dsfdsfsdf', 'dsfdsfdsf', 'dsfdsfdsf', 1, 1, 'dsfdsfdsf', 1222, '2021-06-10T16:00:17.707Z', 2),
-(4, 31, 'dsfsdfds', 'fdsfds', 'sdfdsf', 1, 1, 'sdfdsfs', 2, '2021-06-10T16:01:09.036Z', 2);
+(16, 37, 'Ukraine', 'Ukraine', 'Ukraine', 1, 1, 'Ukraine', 4980, '2021-06-11T09:33:28.472Z', 2),
+(17, 37, 'Mykolaiv', 'Mykolaiv', 'Mykolaiv', 1, 1, 'Mykolaiv', 10, '2021-06-11T09:34:02.799Z', 2),
+(18, 36, 'Sodovaya Street', 'Sodovaya Street', 'Sodovaya Street', 1, 1, 'Sodovaya Street', 100, '2021-06-11T09:34:42.367Z', 2);
 
 -- --------------------------------------------------------
 
@@ -165,13 +166,11 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id_order_details`, `id_product`, `product_options`, `product_count`, `product_sum`, `id_order`) VALUES
-(1, 1, 1, 1, 50, NULL),
-(2, 1, 1, 2, 100, 3),
-(3, 4, 14, 2, 10, 3),
-(4, 40, 5, 1, 234, 3),
-(5, 41, 15, 1, 444, 3),
-(6, 44, 9, 1, 324, 3),
-(7, 5, 4, 2, 1, 4);
+(30, 1, 13, 5, 100, 16),
+(31, 41, 15, 4, 444, 16),
+(32, 45, 11, 4, 676, 16),
+(33, 4, 3, 1, 10, 17),
+(34, 1, 13, 1, 100, 18);
 
 -- --------------------------------------------------------
 
@@ -438,11 +437,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_password`, `user_phone`, `id_status`) VALUES
-(1, 'Admin', 'Admin', 'admin', '123456789', 1),
-(2, 'user', 'Иван', 'user', '234567899', 2),
-(30, 'adminadmin', 'adminadmin', '$2b$05$qo5B.wqZ9dlutDC1zyEXYOfqsLrz5UJeVQT08dE0t7bTuHE4gTg82', '1231312', 2),
-(31, 'admin', 'admin', '$2b$05$iMqQe4y/8aWnaY/Zr7Qg4Oy286BMvGlhvdr6KNrZwLUinz/JCGZdq', '213213123', 2),
-(32, 'qweqeqweqw', 'qweqweqwe', '$2b$05$YPCOr14zRNbRbtZO46d.5.1UScH8xnCMm26MIKLWR5.O8ZosDg8W.', '24234234', 2);
+(36, 'admin', 'admin', '$2b$05$UdgFmQ.eVG6zYv8EBV398eT39WlQkRh5GCp50jsa6qQak.yLcAooe', '12345', 2),
+(37, 'user', 'user', '$2b$05$GzmOcmps6UmGrMBlQdj6me5HJ4fM0MImHyosGZ7QIBWoVxL8hhd/.', '123456', 2);
 
 -- --------------------------------------------------------
 
@@ -602,7 +598,7 @@ ALTER TABLE `users_status`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
@@ -626,13 +622,13 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id_order_details` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_order_details` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT для таблицы `order_status`
@@ -686,7 +682,7 @@ ALTER TABLE `structure`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `users_status`
