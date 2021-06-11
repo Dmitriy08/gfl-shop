@@ -14,18 +14,15 @@ const Cart = () => {
     useEffect(() => {
         dispatch(loadCart())
     }, [dispatch])
+    console.log(cartItems)
+
     return (
         <section className="py-5">
             <Container>
                 <Row>
                     {fetchingCart && <Loader/>}
                     {cartError && <ServerError/>}
-                    {!cartItems && (
-                        <Col xl={12}>
-                            <h2>You cart is empty</h2>
-                        </Col>
 
-                    )}
                     {!cartError && !fetchingCart && cartItems && (
                         <Col xl={12}>
                             <h1>Cart: {cartItems.length}</h1>
@@ -39,6 +36,13 @@ const Cart = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {cartItems.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4}>
+                                            <strong>You cart is empty</strong>
+                                        </td>
+                                    </tr>
+                                )}
                                 {cartItems.map(item =>
                                     <tr key={item.id_cart}>
                                         <td>

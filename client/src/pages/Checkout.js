@@ -149,7 +149,7 @@ const Checkout = () => {
                                 </tr>
                                 </tfoot>
                             </Table>
-                            {}
+
                             <Button
                                 disabled={!country || !city || !address || !delivery || !payment || !addInfo}
                                 onClick={() => {placeOrder()}}

@@ -45,6 +45,13 @@ const Orders = () => {
                             </tr>
                             </thead>
                             <tbody>
+                            {orders.length === 0 && (
+                                <tr>
+                                    <td colSpan={7}>
+                                        <strong>You orders is empty</strong>
+                                    </td>
+                                </tr>
+                            )}
                             {orders.map((item, index) =>
                                 <tr key={item.id_order}>
                                     <td>
