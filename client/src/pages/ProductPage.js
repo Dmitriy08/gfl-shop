@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Image, ListGroup, Row} from "react-bootstrap";
-import {useHistory, useParams} from 'react-router-dom'
+import {NavLink, useHistory, useParams} from 'react-router-dom'
 import ProductsApiService from "../services/products";
 import CartApiService from "../services/cart";
 import {useSelector} from "react-redux";
@@ -20,6 +20,8 @@ const ProductPage = () => {
     const [size, setSize] = useState(null)
 
     const [product_count, setProductCount] = useState(1)
+
+    const [add, setAdd] = useState(false)
 
 
     useEffect(() => {
@@ -75,7 +77,7 @@ const ProductPage = () => {
         if (!response.ok) {
             console.log(data.message)
         }else{
-            history.push(CART_ROUTE)
+            setAdd(true)
         }
     }
 
@@ -120,6 +122,12 @@ const ProductPage = () => {
                             >
                                 Buy Now
                             </Button>
+                            {add && (
+                                <NavLink className="btn ml-2 btn-secondary" to={CART_ROUTE}>
+                                    View Your Cart
+                                </NavLink>
+                            )}
+
                         </div>
                         <hr/>
                         <h4>Types</h4>
